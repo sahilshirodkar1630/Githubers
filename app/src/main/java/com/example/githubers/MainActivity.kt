@@ -3,6 +3,7 @@ package com.example.githubers
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,25 +36,36 @@ class MainActivity : AppCompatActivity() {
             adapter = this@MainActivity.adapter
         }
 
-        searchView.isSubmitButtonEnabled =true
-        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { searchUsers(it) }
-                return true
-            }
 
+        btn.setOnClickListener {
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { searchUsers(it) }
-                return true
-            }
+            val s = edtSearch.text.toString();
+            searchUsers(s);
+            adapter.swapData(originalList);
 
-        })
-
-        searchView.setOnCloseListener {
-            adapter.swapData(originalList)
-            true
         }
+//        searchView.isSubmitButtonEnabled =true
+//        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                Log.d("Search",query+"")
+//                query?.let { searchUsers(it) }
+//                return true
+//            }
+//
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//
+//                Log.d("SearchOnchange",newText+"")
+//                newText?.let { searchUsers(it) }
+//                return true
+//            }
+//
+//        })
+//
+//        searchView.setOnCloseListener {
+//            adapter.swapData(originalList)
+//            true
+//        }
 
         GlobalScope.launch(Dispatchers.Main) {
             val response = withContext(Dispatchers.IO){Client.api.getUsers() }
@@ -70,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     fun searchUsers(query:String){
         GlobalScope.launch(Dispatchers.Main) {
             val response = withContext(Dispatchers.IO){Client.api.searchUsers(query) }
+            Log.d("Response","$response")
             if(response.isSuccessful){
                 response.body()?.let {
                     it.items?.let { it1 -> adapter.swapData(it1) }

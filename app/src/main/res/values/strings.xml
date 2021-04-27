@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Githubers</string>
+    <string name="get">get</string>
 </resources>
