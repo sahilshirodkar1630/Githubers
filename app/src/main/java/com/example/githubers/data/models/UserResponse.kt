@@ -1,4 +1,6 @@
-package com.example.githubers
+package com.example.githubers.data.models
+
+import com.example.mvvm.data.models.User
 
 data class UserResponse(
 	val totalCount: Int? = null,

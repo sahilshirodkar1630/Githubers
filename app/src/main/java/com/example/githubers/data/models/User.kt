@@ -1,4 +1,4 @@
-package com.example.githubers
+package com.example.mvvm.data.models
 
 data class User(
 	val gistsUrl: String? = null,

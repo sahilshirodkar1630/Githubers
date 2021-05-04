@@ -1,5 +1,7 @@
-package com.example.githubers
+package com.example.githubers.data.api
 
+import com.example.githubers.data.models.UserResponse
+import com.example.mvvm.data.models.User
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,5 +16,5 @@ interface GithubService {
     suspend fun getUserById(@Path("id") id:String = "abc"): Response<User>
 
     @GET("search/users")
-    suspend fun searchUsers(@Query("q")query: String): Response<UserResponse>
+    suspend fun searchUser(@Query("q")name: String): Response<UserResponse>
 }
